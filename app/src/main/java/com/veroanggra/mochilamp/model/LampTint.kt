@@ -1,0 +1,57 @@
+package com.veroanggra.mochilamp.model
+
+import androidx.compose.ui.graphics.Color
+
+enum class LampTint(
+    val title: String,
+    val subtitle: String,
+    val burstBg: Color,
+    val outerBg: Color,
+    val dotColor: Color,
+    val shadeTop: Color,
+    val shadeBottom: Color,
+    val earInner: Color,
+    val socket: Color,
+    val wire: Color,
+    val accent: Color,
+) {
+    WARM(
+        title = "Warm Cream",
+        subtitle = "Warm light is ready to accompany your day",
+        burstBg = Color(0xFFFFFBF2),
+        outerBg = Color(0xFFF3EDE2),
+        dotColor = Color(0xFFFDE68A),
+        shadeTop = Color(0xFFFFEAD2),
+        shadeBottom = Color(0xFFFFD4A3),
+        earInner = Color(0xFFFFB98A),
+        socket = Color(0xFFF4A261),
+        wire = Color(0xFFD99B66),
+        accent = Color(0xFFF59E0B),
+    ),
+    SAKURA(
+        title = "Sakura Pink",
+        subtitle = "Soft sakura shades for your sweet day",
+        burstBg = Color(0xFFFFF5F8),
+        outerBg = Color(0xFFF5E6EB),
+        dotColor = Color(0xFFFBCFE8),
+        shadeTop = Color(0xFFFFE4EE),
+        shadeBottom = Color(0xFFFFC2D9),
+        earInner = Color(0xFFF9A8D4),
+        socket = Color(0xFFF472B6),
+        wire = Color(0xFFE295B3),
+        accent = Color(0xFFF472B6),
+    ),
+    SKY(
+        title = "Sky Blue",
+        subtitle = "Fresh and calming sky blue light",
+        burstBg = Color(0xFFF2F9FF),
+        outerBg = Color(0xFFE4EFF7),
+        dotColor = Color(0xFFBAE6FD),
+        shadeTop = Color(0xFFE0F4FF),
+        shadeBottom = Color(0xFFBAE6FD),
+        earInner = Color(0xFF7DD3FC),
+        socket = Color(0xFF60A5FA),
+        wire = Color(0xFF7AA9D6),
+        accent = Color(0xFF0284C7),
+    ),
+}

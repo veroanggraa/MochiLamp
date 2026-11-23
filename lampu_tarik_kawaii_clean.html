@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Lampu Tarik — Kawaii &amp; Clean</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Quicksand (Rounded, Soft & Clean) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Quicksand', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ============================================================
+     * ORGANIC KEYFRAME ANIMATIONS
+     * ============================================================ */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.95; transform: scale(1.15); }
+    }
+
+    @keyframes floatZzz {
+      0% { opacity: 0; transform: translate(0px, 6px) scale(0.65) rotate(-10deg); }
+      25% { opacity: 0.85; }
+      75% { opacity: 0.65; }
+      100% { opacity: 0; transform: translate(18px, -30px) scale(1.15) rotate(12deg); }
+    }
+
+    @keyframes floatSparkle {
+      0%, 100% { opacity: 0.25; transform: translateY(0px) scale(0.8) rotate(0deg); }
+      50% { opacity: 0.95; transform: translateY(-7px) scale(1.12) rotate(14deg); }
+    }
+
+    @keyframes sleepBreathe {
+      0%, 100% { transform: scale(1, 1); }
+      50% { transform: scale(1.018, 0.985); }
+    }
+
+    @keyframes hintFloat {
+      0%, 100% { transform: translateY(0px); opacity: 0.65; }
+      50% { transform: translateY(4px); opacity: 1; }
+    }
+
+    @keyframes heartFloat {
+      0% { opacity: 0; transform: translate(0, 6px) scale(0.4) rotate(var(--rot, 0deg)); }
+      20% { opacity: 1; transform: translate(var(--dx, 0px), -10px) scale(1.1) rotate(var(--rot, 0deg)); }
+      100% { opacity: 0; transform: translate(var(--dx2, 0px), -58px) scale(0.85) rotate(var(--rot2, 10deg)); }
+    }
+
+    @keyframes charmPulse {
+      0%, 100% { opacity: 0.35; transform: scale(0.95); }
+      50% { opacity: 0.72; transform: scale(1.12); }
+    }
+
+    .anim-twinkle {
+      animation: twinkle var(--dur, 3.2s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    .anim-zzz-1 { animation: floatZzz 3s ease-in-out infinite; }
+    .anim-zzz-2 { animation: floatZzz 3s ease-in-out 1s infinite; }
+    .anim-zzz-3 { animation: floatZzz 3s ease-in-out 2s infinite; }
+
+    .anim-sparkle {
+      animation: floatSparkle var(--dur, 3s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    .anim-breathe {
+      animation: sleepBreathe 3.8s ease-in-out infinite;
+      transform-origin: 180px 128px;
+    }
+
+    .anim-hint {
+      animation: hintFloat 2.2s ease-in-out infinite;
+    }
+
+    .anim-charm-pulse {
+      animation: charmPulse 2.6s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    .floating-heart {
+      animation: heartFloat 1.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+
+    /* Smooth radial burst transition from lamp bulb */
+    #light-burst {
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease, background-color 0.6s ease;
+    }
+
+    /* Prevent accidental scroll/selection while dragging the cord */
+    .touch-none-clean {
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body id="outer-bg" class="font-sans antialiased min-h-[100dvh] w-full flex items-center justify-center bg-[#0c0e18] transition-colors duration-700 sm:p-6 overflow-x-hidden">
+
+  <!-- ============================================================
+       MOBILE CONTAINER (Full-screen on mobile, sleek frame on desktop)
+       ============================================================ -->
+  <main
+    id="mobile-screen"
+    class="relative w-full min-h-[100dvh] sm:min-h-[750px] sm:max-h-[820px] sm:max-w-[388px] sm:rounded-[3rem] sm:border-[6px] sm:border-[#1f2438] sm:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.65)] overflow-hidden flex flex-col justify-between bg-[#131624] transition-colors duration-700"
+  >
+
+    <!-- ============================================================
+         LAYER 1: ORGANIC RADIAL LIGHT BURST & NIGHT STARS
+         ============================================================ -->
+
+    <!-- Expanding Radial Light Canvas (Originates directly from the lamp bulb) -->
+    <div
+      id="light-burst"
+      class="pointer-events-none absolute left-1/2 top-[210px] -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1100px] rounded-full bg-[#FFFBF2] scale-0 opacity-0 z-0"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Soft Warm Aura Glow around Lamp (Visible in Light Mode) -->
+    <div
+      id="light-aura"
+      class="pointer-events-none absolute left-1/2 top-[200px] -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full blur-3xl opacity-0 transition-all duration-700 z-0"
+      style="background: radial-gradient(circle, rgba(254, 226, 153, 0.72) 0%, rgba(254, 243, 199, 0.25) 45%, rgba(255, 251, 242, 0) 72%);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Minimalist Twinkling Stars (Visible in Dark Mode) -->
+    <div id="stars-layer" class="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-700 z-0">
+      <svg class="w-full h-full" viewBox="0 0 388 760" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="54" cy="118" r="1.8" fill="#fde68a" class="anim-twinkle" style="--dur: 3.1s; --delay: 0.2s" />
+        <circle cx="96" cy="182" r="1.4" fill="#c7d2fe" class="anim-twinkle" style="--dur: 3.8s; --delay: 1.1s" />
+        <circle cx="328" cy="132" r="2" fill="#fef08a" class="anim-twinkle" style="--dur: 2.9s; --delay: 0.6s" />
+        <circle cx="348" cy="224" r="1.5" fill="#e0e7ff" class="anim-twinkle" style="--dur: 3.5s; --delay: 1.5s" />
+        <circle cx="42" cy="296" r="1.5" fill="#e0e7ff" class="anim-twinkle" style="--dur: 4s; --delay: 0.4s" />
+        <circle cx="316" cy="340" r="1.3" fill="#fde68a" class="anim-twinkle" style="--dur: 3.2s; --delay: 1.8s" />
+        <circle cx="72" cy="445" r="1.2" fill="#c7d2fe" class="anim-twinkle" style="--dur: 3.9s; --delay: 0.9s" />
+        <circle cx="332" cy="488" r="1.4" fill="#e0e7ff" class="anim-twinkle" style="--dur: 3.3s; --delay: 1.3s" />
+
+        <!-- Subtle 4-point tiny stars -->
+        <path d="M68 148 L70 153 L75 155 L70 157 L68 162 L66 157 L61 155 L66 153 Z" fill="#fef08a" class="anim-twinkle" style="--dur: 3.6s; --delay: 0.5s" />
+        <path d="M312 184 L313.5 188 L317.5 189.5 L313.5 191 L312 195 L310.5 191 L306.5 189.5 L310.5 188 Z" fill="#fde68a" class="anim-twinkle" style="--dur: 2.8s; --delay: 1.4s" />
+      </svg>
+    </div>
+
+    <!-- ============================================================
+         LAYER 2: ULTRA-MINIMAL HEADER
+         ============================================================ -->
+    <header class="relative z-30 flex items-center justify-between px-6 pt-6 pb-2">
+      <!-- Left: Minimal Status Pill -->
+      <div
+        id="status-pill"
+        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide bg-white/[0.08] text-indigo-100/90 border border-white/[0.08] backdrop-blur-md transition-all duration-500"
+      >
+        <span id="status-icon" class="text-sm leading-none">🌙</span>
+        <span id="status-text">Malam</span>
+      </div>
+
+      <!-- Right: Minimal Sound Icon Button -->
+      <button
+        id="sound-btn"
+        type="button"
+        aria-label="Nyalakan atau matikan suara"
+        class="w-9 h-9 rounded-full flex items-center justify-center bg-white/[0.08] text-indigo-100/85 border border-white/[0.08] backdrop-blur-md hover:bg-white/[0.14] active:scale-90 transition-all duration-300"
+      >
+        <!-- Speaker On Icon -->
+        <svg id="icon-sound-on" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <!-- Speaker Muted Icon -->
+        <svg id="icon-sound-off" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+    </header>
+
+    <!-- ============================================================
+         LAYER 3: KAWAII MOCHI HANGING LAMP CENTERPIECE
+         ============================================================ -->
+    <section class="relative z-20 flex-1 flex flex-col items-center justify-start -mt-12 select-none">
+      <svg
+        id="lamp-svg"
+        class="w-full max-w-[360px] h-[360px] overflow-visible touch-none-clean"
+        viewBox="0 0 360 360"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        role="group"
+        aria-label="Karakter lampu gantung lucu. Tarik tali bintang untuk menyalakan atau mematikan lampu, atau ketuk badan lampu."
+      >
+        <defs>
+          <!-- Pastel Lampshade Gradients -->
+          <linearGradient id="shadeDarkGrad" x1="180" y1="86" x2="180" y2="188" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#353d63" />
+            <stop offset="100%" stop-color="#252b48" />
+          </linearGradient>
+
+          <linearGradient id="shadeWarmGrad" x1="180" y1="86" x2="180" y2="188" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFEAD2" />
+            <stop offset="100%" stop-color="#FFD4A3" />
+          </linearGradient>
+
+          <linearGradient id="shadeSakuraGrad" x1="180" y1="86" x2="180" y2="188" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFE4EE" />
+            <stop offset="100%" stop-color="#FFC2D9" />
+          </linearGradient>
+
+          <linearGradient id="shadeSkyGrad" x1="180" y1="86" x2="180" y2="188" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#E0F4FF" />
+            <stop offset="100%" stop-color="#BAE6FD" />
+          </linearGradient>
+
+          <radialGradient id="bulbGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+            <stop offset="45%" stop-color="#fef08a" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#fde047" stop-opacity="0" />
+          </radialGradient>
+
+          <filter id="kawaiiShadow" x="-25%" y="-20%" width="150%" height="150%">
+            <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0b0e1c" flood-opacity="0.22" />
+          </filter>
+        </defs>
+
+        <!-- Minimal Ceiling Cap -->
+        <path id="ceiling-cap" d="M162 0 H198 C198 8 190 13 180 13 C170 13 162 8 162 0 Z" fill="#2d3454" class="transition-colors duration-500" />
+
+        <!-- Floating Sparkles around Lamp (Visible in Light Mode) -->
+        <g id="light-sparkles" opacity="0" class="transition-opacity duration-700 pointer-events-none">
+          <path d="M84 128 L86.5 134 L92.5 136.5 L86.5 139 L84 145 L81.5 139 L75.5 136.5 L81.5 134 Z" fill="#fbbf24" class="anim-sparkle" style="--dur: 2.8s; --delay: 0s" />
+          <path d="M280 116 L282 121 L287 123 L282 125 L280 130 L278 125 L273 123 L278 121 Z" fill="#f59e0b" class="anim-sparkle" style="--dur: 3.3s; --delay: 0.7s" />
+          <circle cx="96" cy="186" r="3" fill="#fde68a" class="anim-sparkle" style="--dur: 2.6s; --delay: 0.4s" />
+          <circle cx="272" cy="178" r="2.6" fill="#fcd34d" class="anim-sparkle" style="--dur: 3.1s; --delay: 1.2s" />
+          <path d="M262 84 L263.5 87.5 L267 89 L263.5 90.5 L262 94 L260.5 90.5 L257 89 L260.5 87.5 Z" fill="#fbbf24" class="anim-sparkle" style="--dur: 2.9s; --delay: 1.5s" />
+        </g>
+
+        <!-- Container for Easter Egg Floating Hearts -->
+        <g id="hearts-layer" class="pointer-events-none"></g>
+
+        <!-- SWAYING PENDULUM GROUP (Pivots at ceiling: 180, 10) -->
+        <g id="lamp-pendulum" transform="rotate(0 180 10)">
+
+          <!-- Clean Hanging Wire -->
+          <line id="main-wire" x1="180" y1="10" x2="180" y2="88" stroke="#47517a" stroke-width="3" stroke-linecap="round" />
+
+          <!-- ==========================================
+               ELASTIC PULL CORD & CHUNKY STAR CHARM
+               ========================================== -->
+          <g id="pull-cord-group">
+            <!-- Flexible Quadratic Bezier Cord -->
+            <path id="cord-path" d="M222 178 Q222 222 222 266" stroke="#64748b" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+            <!-- Two tiny decorative beads -->
+            <circle id="bead-1" cx="222" cy="204" r="2.8" fill="#94a3b8" />
+            <circle id="bead-2" cx="222" cy="236" r="2.8" fill="#94a3b8" />
+
+            <!-- Chunky Kawaii Star Pull Charm -->
+            <g id="cord-handle" transform="translate(222, 272)" class="cursor-grab active:cursor-grabbing">
+              <!-- Soft Night Glow Halo (Helps visibility in Dark Mode) -->
+              <circle id="charm-glow" cx="0" cy="0" r="20" fill="#fde68a" class="anim-charm-pulse" />
+
+              <!-- Subtle Pull Progress Ring -->
+              <circle
+                id="pull-ring"
+                cx="0"
+                cy="0"
+                r="21"
+                stroke="#fbbf24"
+                stroke-width="2.5"
+                stroke-dasharray="132"
+                stroke-dashoffset="132"
+                stroke-linecap="round"
+                transform="rotate(-90)"
+                opacity="0"
+              />
+
+              <!-- Chubby Rounded Star Charm -->
+              <path
+                id="charm-star"
+                d="M0 -14 C2.5 -14 4.2 -7.2 5.6 -5.8 C7 -4.4 14 -3.6 14.5 -1.4 C15 0.8 9.2 4.2 8.4 6.2 C7.6 8.2 9.4 14.2 7.4 15.4 C5.4 16.6 1.8 11.8 0 11.8 C-1.8 11.8 -5.4 16.6 -7.4 15.4 C-9.4 14.2 -7.6 8.2 -8.4 6.2 C-9.2 4.2 -15 0.8 -14.5 -1.4 C-14 -3.6 -7 -4.4 -5.6 -5.8 C-4.2 -7.2 -2.5 -14 0 -14 Z"
+                fill="#FEF08A"
+                stroke="#F59E0B"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+              />
+              <!-- Glossy tiny dot on star -->
+              <circle cx="-3.2" cy="-3.5" r="2" fill="#ffffff" opacity="0.85" />
+
+              <!-- Generous invisible touch target for effortless thumb grabbing -->
+              <circle cx="0" cy="0" r="38" fill="transparent" />
+            </g>
+          </g>
+
+          <!-- ==========================================
+               KAWAII MOCHI LAMP BODY (Squish & Bounce!)
+               ========================================== -->
+          <g id="lamp-body-wrapper" transform="translate(0, 0)" class="cursor-pointer">
+            <g id="lamp-breathe-group" class="anim-breathe">
+
+              <!-- Glowing Bulb Halo (Visible in Light Mode) -->
+              <circle id="bulb-halo" cx="180" cy="192" r="44" fill="url(#bulbGlow)" opacity="0" class="transition-opacity duration-500 pointer-events-none" />
+
+              <!-- Chubby Rounded Bulb Peeking Underneath -->
+              <path
+                id="lamp-bulb"
+                d="M160 176 C160 198 169 206 180 206 C191 206 200 198 200 176 Z"
+                fill="#3b4368"
+                class="transition-colors duration-500"
+              />
+              <!-- Bulb Shine -->
+              <path d="M168 186 C168 192 171 196 174 197" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" opacity="0.5" />
+
+              <!-- Top Cute Mochi/Bear Ears on Lampshade -->
+              <g id="lamp-ears">
+                <!-- Left Ear -->
+                <circle id="ear-left" cx="136" cy="96" r="15" fill="url(#shadeDarkGrad)" />
+                <circle id="ear-left-inner" cx="136" cy="97" r="7.5" fill="#4c5685" class="transition-colors duration-500" />
+                <!-- Right Ear -->
+                <circle id="ear-right" cx="224" cy="96" r="15" fill="url(#shadeDarkGrad)" />
+                <circle id="ear-right-inner" cx="224" cy="97" r="7.5" fill="#4c5685" class="transition-colors duration-500" />
+              </g>
+
+              <!-- Tiny Round Socket Cap -->
+              <rect id="lamp-socket" x="169" y="80" width="22" height="12" rx="6" fill="#2d3454" class="transition-colors duration-500" />
+
+              <!-- Main Plump Mochi Lampshade -->
+              <path
+                id="lamp-shade"
+                d="M180 86 C132 86 104 118 102 162 C101.5 174 110 183 122 183 H238 C250 183 258.5 174 258 162 C256 118 228 86 180 86 Z"
+                fill="url(#shadeDarkGrad)"
+                filter="url(#kawaiiShadow)"
+              />
+
+              <!-- Soft Pastel Rim Shadow Underneath -->
+              <ellipse id="shade-rim" cx="180" cy="181" rx="70" ry="4.5" fill="#181c30" opacity="0.32" />
+
+              <!-- Cute Glossy Reflection on Shade -->
+              <path
+                d="M124 134 C128 114 142 101 158 97"
+                stroke="#ffffff"
+                stroke-width="5"
+                stroke-linecap="round"
+                opacity="0.28"
+              />
+
+              <!-- ==========================================
+                   4 EXPRESSIVE KAWAII FACES
+                   ========================================== -->
+
+              <!-- 1. SLEEPY FACE (Dark Mode Idle) -->
+              <g id="face-sleepy" opacity="1">
+                <!-- Curved peaceful 'u  u' eyes -->
+                <path d="M148 140 Q156 148 164 140" stroke="#e2e8f0" stroke-width="3.2" stroke-linecap="round" fill="none" />
+                <path d="M196 140 Q204 148 212 140" stroke="#e2e8f0" stroke-width="3.2" stroke-linecap="round" fill="none" />
+                <!-- Pastel sleepy cheeks -->
+                <ellipse cx="141" cy="150" rx="8" ry="4.5" fill="#f472b6" opacity="0.28" />
+                <ellipse cx="219" cy="150" rx="8" ry="4.5" fill="#f472b6" opacity="0.28" />
+                <!-- Tiny peaceful mouth -->
+                <circle cx="180" cy="151" r="2.6" fill="#cbd5e1" opacity="0.9" />
+
+                <!-- Floating zZz bubbles -->
+                <g fill="#c7d2fe" font-family="Quicksand, sans-serif" font-weight="700">
+                  <text x="242" y="114" font-size="11" class="anim-zzz-1">z</text>
+                  <text x="252" y="102" font-size="14" class="anim-zzz-2">Z</text>
+                  <text x="262" y="90" font-size="10" class="anim-zzz-3">z</text>
+                </g>
+              </g>
+
+              <!-- 2. DRAGGING FACE (> < squeezed eyes) -->
+              <g id="face-dragging" opacity="0">
+                <path id="drag-eye-l" d="M149 135 L161 141 L149 147" stroke="#fef08a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <path id="drag-eye-r" d="M211 135 L199 141 L211 147" stroke="#fef08a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                <!-- Extra rosy blush -->
+                <ellipse cx="140" cy="151" rx="9" ry="5" fill="#fb7185" opacity="0.58" />
+                <ellipse cx="220" cy="151" rx="9" ry="5" fill="#fb7185" opacity="0.58" />
+                <!-- Cute tense cat mouth -->
+                <path id="drag-mouth" d="M174 150 Q177 154 180 150 Q183 154 186 150" stroke="#fef08a" stroke-width="2.6" stroke-linecap="round" fill="none" />
+              </g>
+
+              <!-- 3. THRESHOLD SURPRISED FACE (O ᴥ O) -->
+              <g id="face-threshold" opacity="0">
+                <!-- Wide surprised O eyes -->
+                <circle cx="156" cy="140" r="7.5" fill="#451a03" />
+                <circle cx="153.5" cy="137.5" r="2.6" fill="#ffffff" />
+                <circle cx="204" cy="140" r="7.5" fill="#451a03" />
+                <circle cx="201.5" cy="137.5" r="2.6" fill="#ffffff" />
+                <!-- Super rosy blush -->
+                <ellipse cx="139" cy="151" rx="9.5" ry="5.2" fill="#fb7185" opacity="0.65" />
+                <ellipse cx="221" cy="151" rx="9.5" ry="5.2" fill="#fb7185" opacity="0.65" />
+                <!-- Tiny surprised 'ᴥ' mouth -->
+                <path d="M173 148 Q176.5 154 180 149 Q183.5 154 187 148" stroke="#451a03" stroke-width="2.6" stroke-linecap="round" fill="none" />
+              </g>
+
+              <!-- 4. HAPPY AWAKE FACE (Light Mode Idle + Blink & Eye Tracking) -->
+              <g id="face-happy" opacity="0">
+                <!-- Blink wrapper scales Y cleanly during automatic blinks -->
+                <g id="happy-eyes-blink" style="transform-origin: 180px 140px; transition: transform 0.09s ease-in-out;">
+                  <!-- Pupils group subtly follows cursor / touch -->
+                  <g id="happy-pupils" transform="translate(0, 0)">
+                    <!-- Left Sparkling Eye -->
+                    <circle cx="156" cy="140" r="7.2" fill="#3f2b22" />
+                    <circle cx="153.6" cy="137.4" r="2.6" fill="#ffffff" />
+                    <circle cx="158.6" cy="142.8" r="1.3" fill="#ffffff" />
+
+                    <!-- Right Sparkling Eye -->
+                    <circle cx="204" cy="140" r="7.2" fill="#3f2b22" />
+                    <circle cx="201.6" cy="137.4" r="2.6" fill="#ffffff" />
+                    <circle cx="206.6" cy="142.8" r="1.3" fill="#ffffff" />
+                  </g>
+                </g>
+
+                <!-- Pastel Pink Rosy Cheeks -->
+                <ellipse cx="139" cy="151" rx="9" ry="5" fill="#fb7185" opacity="0.45" />
+                <ellipse cx="221" cy="151" rx="9" ry="5" fill="#fb7185" opacity="0.45" />
+
+                <!-- Cute Cat Smile (ω) -->
+                <path d="M171 148 Q175.5 154 180 148.5 Q184.5 154 189 148" stroke="#3f2b22" stroke-width="2.8" stroke-linecap="round" fill="none" />
+              </g>
+
+              <!-- 5. EASTER EGG SHY BLUSH FACE (When lamp body is tapped!) -->
+              <g id="face-blush" opacity="0">
+                <!-- Happy squinting ^ ^ eyes -->
+                <path id="blush-eye-l" d="M148 143 Q156 134 164 143" stroke="#3f2b22" stroke-width="3.2" stroke-linecap="round" fill="none" />
+                <path id="blush-eye-r" d="M196 143 Q204 134 212 143" stroke="#3f2b22" stroke-width="3.2" stroke-linecap="round" fill="none" />
+                <!-- Extra bright pink cheeks + cute blush lines -->
+                <ellipse cx="138" cy="151" rx="10" ry="5.5" fill="#fb7185" opacity="0.65" />
+                <ellipse cx="222" cy="151" rx="10" ry="5.5" fill="#fb7185" opacity="0.65" />
+                <!-- Happy little smile -->
+                <path id="blush-mouth" d="M173 148 Q180 156 187 148" stroke="#3f2b22" stroke-width="2.8" stroke-linecap="round" fill="none" />
+              </g>
+
+            </g>
+          </g>
+        </g>
+      </svg>
+
+      <!-- Ultra-thin Clean Hint Text near Charm (Disappears after first interaction) -->
+      <div
+        id="pull-hint"
+        class="pointer-events-none -mt-12 pl-24 flex items-center gap-1 text-[11px] font-semibold tracking-wide text-indigo-200/75 anim-hint transition-all duration-500"
+      >
+        <span>tarik ke bawah</span>
+        <span>↓</span>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LAYER 4: ULTRA-CLEAN MINIMALIST BOTTOM AREA (No Heavy Cards)
+         ============================================================ -->
+    <footer class="relative z-20 flex flex-col items-center text-center px-8 pb-11 pt-4 gap-6">
+      <!-- Clean Typography Greeting -->
+      <div class="space-y-2 max-w-[270px]">
+        <h1
+          id="greeting-title"
+          class="text-[24px] font-bold tracking-tight text-white transition-colors duration-500"
+        >
+          Waktunya Istirahat
+        </h1>
+        <p
+          id="greeting-subtitle"
+          class="text-[14px] font-medium leading-relaxed text-indigo-200/75 transition-colors duration-500"
+        >
+          Ssst... lampunya lagi bobo. Tarik talinya ya!
+        </p>
+      </div>
+
+      <!-- Minimalist 3-Dot Light Tint Picker (Smoothly appears ONLY in Light Mode) -->
+      <div
+        id="tint-picker"
+        class="flex items-center gap-3 px-4 py-2 rounded-full bg-white/75 border border-black/[0.06] shadow-sm backdrop-blur-md opacity-0 translate-y-3 pointer-events-none transition-all duration-500"
+        role="radiogroup"
+        aria-label="Pilih nuansa warna cahaya"
+      >
+        <button
+          type="button"
+          data-tint="warm"
+          aria-label="Nuansa Hangat Krem"
+          title="Hangat"
+          class="tint-dot w-5 h-5 rounded-full bg-[#FDE68A] ring-2 ring-offset-2 ring-amber-400 transition-transform duration-200 active:scale-90"
+        ></button>
+        <button
+          type="button"
+          data-tint="sakura"
+          aria-label="Nuansa Sakura Pink Lembut"
+          title="Sakura"
+          class="tint-dot w-5 h-5 rounded-full bg-[#FBCFE8] ring-0 ring-offset-2 ring-pink-300 transition-transform duration-200 active:scale-90"
+        ></button>
+        <button
+          type="button"
+          data-tint="sky"
+          aria-label="Nuansa Langit Biru Pastel"
+          title="Langit"
+          class="tint-dot w-5 h-5 rounded-full bg-[#BAE6FD] ring-0 ring-offset-2 ring-sky-300 transition-transform duration-200 active:scale-90"
+        ></button>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ============================================================
+       JAVASCRIPT: PHYSICS, KAWAII EXPRESSIONS, EASTER EGG & AUDIO
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ---------------------------------------------------------
+       * 1. STATE & THEME PALETTES
+       * --------------------------------------------------------- */
+      const state = {
+        isLight: false,
+        soundEnabled: true,
+        hasInteracted: false,
+        tint: 'warm', // 'warm' | 'sakura' | 'sky'
+        blushTimer: null,
+        isBlushing: false,
+      };
+
+      const TINT_THEMES = {
+        warm: {
+          burstBg: '#FFFBF2',
+          outerBg: '#f3ede2',
+          aura: 'radial-gradient(circle, rgba(254, 226, 153, 0.72) 0%, rgba(254, 243, 199, 0.25) 45%, rgba(255, 251, 242, 0) 72%)',
+          shadeGrad: 'url(#shadeWarmGrad)',
+          earInner: '#ffb98a',
+          socket: '#f4a261',
+          wire: '#d99b66',
+          subtitle: 'Cahaya hangat siap menemani harimu ✨',
+          ringClass: 'ring-amber-400',
+        },
+        sakura: {
+          burstBg: '#FFF5F8',
+          outerBg: '#f5e6eb',
+          aura: 'radial-gradient(circle, rgba(251, 207, 232, 0.72) 0%, rgba(252, 231, 243, 0.28) 45%, rgba(255, 245, 248, 0) 72%)',
+          shadeGrad: 'url(#shadeSakuraGrad)',
+          earInner: '#f9a8d4',
+          socket: '#f472b6',
+          wire: '#e295b3',
+          subtitle: 'Nuansa sakura lembut untuk harimu yang manis 🌸',
+          ringClass: 'ring-pink-300',
+        },
+        sky: {
+          burstBg: '#F2F9FF',
+          outerBg: '#e4eff7',
+          aura: 'radial-gradient(circle, rgba(186, 230, 253, 0.75) 0%, rgba(224, 242, 254, 0.28) 45%, rgba(242, 249, 255, 0) 72%)',
+          shadeGrad: 'url(#shadeSkyGrad)',
+          earInner: '#7dd3fc',
+          socket: '#60a5fa',
+          wire: '#7aa9d6',
+          subtitle: 'Cahaya biru langit yang segar dan menenangkan ☁️',
+          ringClass: 'ring-sky-300',
+        },
+      };
+
+      /* ---------------------------------------------------------
+       * 2. DOM REFERENCES
+       * --------------------------------------------------------- */
+      const el = {
+        outerBg: document.getElementById('outer-bg'),
+        mobileScreen: document.getElementById('mobile-screen'),
+        lightBurst: document.getElementById('light-burst'),
+        lightAura: document.getElementById('light-aura'),
+        starsLayer: document.getElementById('stars-layer'),
+
+        // Header
+        statusPill: document.getElementById('status-pill'),
+        statusIcon: document.getElementById('status-icon'),
+        statusText: document.getElementById('status-text'),
+        soundBtn: document.getElementById('sound-btn'),
+        iconSoundOn: document.getElementById('icon-sound-on'),
+        iconSoundOff: document.getElementById('icon-sound-off'),
+
+        // Lamp SVG
+        lampSvg: document.getElementById('lamp-svg'),
+        lampPendulum: document.getElementById('lamp-pendulum'),
+        lampBodyWrapper: document.getElementById('lamp-body-wrapper'),
+        lampBreatheGroup: document.getElementById('lamp-breathe-group'),
+        lampShade: document.getElementById('lamp-shade'),
+        earLeft: document.getElementById('ear-left'),
+        earRight: document.getElementById('ear-right'),
+        earLeftInner: document.getElementById('ear-left-inner'),
+        earRightInner: document.getElementById('ear-right-inner'),
+        lampSocket: document.getElementById('lamp-socket'),
+        ceilingCap: document.getElementById('ceiling-cap'),
+        mainWire: document.getElementById('main-wire'),
+        lampBulb: document.getElementById('lamp-bulb'),
+        bulbHalo: document.getElementById('bulb-halo'),
+        shadeRim: document.getElementById('shade-rim'),
+        lightSparkles: document.getElementById('light-sparkles'),
+        heartsLayer: document.getElementById('hearts-layer'),
+
+        // Faces
+        faceSleepy: document.getElementById('face-sleepy'),
+        faceDragging: document.getElementById('face-dragging'),
+        dragEyeL: document.getElementById('drag-eye-l'),
+        dragEyeR: document.getElementById('drag-eye-r'),
+        dragMouth: document.getElementById('drag-mouth'),
+        faceThreshold: document.getElementById('face-threshold'),
+        faceHappy: document.getElementById('face-happy'),
+        happyEyesBlink: document.getElementById('happy-eyes-blink'),
+        happyPupils: document.getElementById('happy-pupils'),
+        faceBlush: document.getElementById('face-blush'),
+        blushEyeL: document.getElementById('blush-eye-l'),
+        blushEyeR: document.getElementById('blush-eye-r'),
+        blushMouth: document.getElementById('blush-mouth'),
+
+        // Pull Cord
+        cordPath: document.getElementById('cord-path'),
+        bead1: document.getElementById('bead-1'),
+        bead2: document.getElementById('bead-2'),
+        cordHandle: document.getElementById('cord-handle'),
+        charmGlow: document.getElementById('charm-glow'),
+        pullRing: document.getElementById('pull-ring'),
+        pullHint: document.getElementById('pull-hint'),
+
+        // Bottom Minimal Content
+        greetingTitle: document.getElementById('greeting-title'),
+        greetingSubtitle: document.getElementById('greeting-subtitle'),
+        tintPicker: document.getElementById('tint-picker'),
+        tintDots: document.querySelectorAll('.tint-dot'),
+      };
+
+      /* ---------------------------------------------------------
+       * 3. WEB AUDIO API — SOFT CLICK + KALIMBA CHIME + BLUSH POP
+       * --------------------------------------------------------- */
+      let audioCtx = null;
+
+      function ensureAudio() {
+        try {
+          if (!audioCtx) {
+            const Ctx = window.AudioContext || window.webkitAudioContext;
+            if (Ctx) audioCtx = new Ctx();
+          }
+          if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+        } catch (_) {}
+      }
+
+      /**
+       * Plays a gentle kalimba/marimba tone
+       */
+      function playKalimbaNote(freq, startTime, duration, volume) {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+
+        gain.gain.setValueAtTime(0.001, startTime);
+        gain.gain.linearRampToValueAtTime(volume, startTime + 0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0008, startTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.02);
+      }
+
+      /**
+       * Soft tactile switch pop + rising (ON) or falling (OFF) kalimba chime
+       */
+      function playSwitchSound(turningOn) {
+        if (!state.soundEnabled) return;
+        ensureAudio();
+        if (!audioCtx) return;
+
+        try {
+          const now = audioCtx.currentTime;
+
+          // 1) Cute soft mechanical "pop"
+          const popOsc = audioCtx.createOscillator();
+          const popGain = audioCtx.createGain();
+          popOsc.type = 'triangle';
+          popOsc.frequency.setValueAtTime(turningOn ? 520 : 380, now);
+          popOsc.frequency.exponentialRampToValueAtTime(turningOn ? 220 : 150, now + 0.035);
+          popGain.gain.setValueAtTime(0.16, now);
+          popGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          popOsc.connect(popGain);
+          popGain.connect(audioCtx.destination);
+          popOsc.start(now);
+          popOsc.stop(now + 0.045);
+
+          // 2) Gentle kalimba chime
+          if (turningOn) {
+            // Cheerful rising C5 -> E5 -> G5
+            playKalimbaNote(523.25, now + 0.02, 0.35, 0.11);
+            playKalimbaNote(659.25, now + 0.08, 0.38, 0.11);
+            playKalimbaNote(783.99, now + 0.14, 0.48, 0.10);
+          } else {
+            // Cozy falling G4 -> D4
+            playKalimbaNote(392.00, now + 0.02, 0.32, 0.10);
+            playKalimbaNote(293.66, now + 0.10, 0.42, 0.09);
+          }
+        } catch (_) {}
+      }
+
+      /**
+       * Cute squishy chime when tapping the lamp body (Easter Egg)
+       */
+      function playBlushSound() {
+        if (!state.soundEnabled) return;
+        ensureAudio();
+        if (!audioCtx) return;
+        try {
+          const now = audioCtx.currentTime;
+          playKalimbaNote(587.33, now, 0.22, 0.09);       // D5
+          playKalimbaNote(880.00, now + 0.06, 0.28, 0.08); // A5
+        } catch (_) {}
+      }
+
+      /* ---------------------------------------------------------
+       * 4. SPRING PHYSICS & PENDULUM ENGINE (60fps)
+       * --------------------------------------------------------- */
+      const CORD_X = 222;
+      const CORD_Y = 178;
+      const REST_LEN = 88;
+      const PULL_THRESHOLD = 46;
+      const MAX_PULL_Y = 82;
+      const MAX_PULL_X = 36;
+
+      const phys = {
+        isDragging: false,
+        pointerId: null,
+        startX: 0,
+        startY: 0,
+        dragDist: 0,
+        passedThreshold: false,
+
+        // Cord displacement & velocity
+        pullX: 0,
+        pullY: 0,
+        velX: 0,
+        velY: 0,
+
+        // Pendulum sway
+        swayAngle: 0,
+        swayVel: 0,
+
+        // Lamp body bouncy squash-and-stretch spring
+        squish: 0,
+        squishVel: 0,
+
+        // Eye tracking (smoothly lerped)
+        eyeTargetX: 0,
+        eyeTargetY: 0,
+        eyeX: 0,
+        eyeY: 0,
+      };
+
+      function renderLamp() {
+        // 1) Cord bezier path & beads
+        const endX = CORD_X + phys.pullX;
+        const endY = CORD_Y + REST_LEN + phys.pullY;
+        const ctrlX = CORD_X + phys.pullX * 0.35;
+        const ctrlY = CORD_Y + (REST_LEN + phys.pullY) * 0.52;
+
+        el.cordPath.setAttribute(
+          'd',
+          `M${CORD_X} ${CORD_Y} Q${ctrlX.toFixed(1)} ${ctrlY.toFixed(1)} ${endX.toFixed(1)} ${endY.toFixed(1)}`
+        );
+
+        const placeBead = (node, t) => {
+          const inv = 1 - t;
+          const bx = inv * inv * CORD_X + 2 * inv * t * ctrlX + t * t * endX;
+          const by = inv * inv * CORD_Y + 2 * inv * t * ctrlY + t * t * endY;
+          node.setAttribute('cx', bx.toFixed(1));
+          node.setAttribute('cy', by.toFixed(1));
+        };
+        placeBead(el.bead1, 0.32);
+        placeBead(el.bead2, 0.66);
+
+        // Star charm position & gentle tilt
+        const charmRot = -phys.pullX * 0.65;
+        el.cordHandle.setAttribute(
+          'transform',
+          `translate(${endX.toFixed(1)}, ${(endY + 6).toFixed(1)}) rotate(${charmRot.toFixed(1)})`
+        );
+
+        // Subtle progress ring while pulling
+        const progress = Math.max(0, Math.min(1, phys.pullY / PULL_THRESHOLD));
+        if (phys.isDragging && phys.pullY > 5) {
+          el.pullRing.setAttribute('opacity', '0.85');
+          el.pullRing.setAttribute('stroke-dashoffset', (132 * (1 - progress)).toFixed(1));
+        } else {
+          el.pullRing.setAttribute('opacity', '0');
+          el.pullRing.setAttribute('stroke-dashoffset', '132');
+        }
+
+        // 2) Pendulum sway
+        el.lampPendulum.setAttribute('transform', `rotate(${phys.swayAngle.toFixed(2)} 180 10)`);
+
+        // 3) Elastic Squash-and-Stretch of Lamp Body (from pulling + bouncy spring)
+        const pullStretch = Math.max(0, phys.pullY) * 0.0022;
+        const scaleY = 1 + pullStretch - phys.squish;
+        const scaleX = 1 - pullStretch * 0.55 + phys.squish * 0.85;
+        const offsetY = Math.max(0, phys.pullY * 0.16) + phys.squish * 14;
+
+        el.lampBodyWrapper.setAttribute(
+          'transform',
+          `translate(180, ${(140 + offsetY).toFixed(2)}) scale(${scaleX.toFixed(4)}, ${scaleY.toFixed(4)}) translate(-180, -140)`
+        );
+
+        // 4) Smooth Eye Tracking in Light Mode
+        phys.eyeX += (phys.eyeTargetX - phys.eyeX) * 0.12;
+        phys.eyeY += (phys.eyeTargetY - phys.eyeY) * 0.12;
+        el.happyPupils.setAttribute('transform', `translate(${phys.eyeX.toFixed(2)}, ${phys.eyeY.toFixed(2)})`);
+
+        // 5) Expressive Face State Machine
+        const hideAllFaces = () => {
+          el.faceSleepy.setAttribute('opacity', '0');
+          el.faceDragging.setAttribute('opacity', '0');
+          el.faceThreshold.setAttribute('opacity', '0');
+          el.faceHappy.setAttribute('opacity', '0');
+          el.faceBlush.setAttribute('opacity', '0');
+        };
+
+        hideAllFaces();
+        if (phys.isDragging && phys.pullY > 8) {
+          if (phys.pullY >= PULL_THRESHOLD) {
+            el.faceThreshold.setAttribute('opacity', '1');
+          } else {
+            el.faceDragging.setAttribute('opacity', '1');
+          }
+        } else if (state.isBlushing) {
+          el.faceBlush.setAttribute('opacity', '1');
+        } else if (state.isLight) {
+          el.faceHappy.setAttribute('opacity', '1');
+        } else {
+          el.faceSleepy.setAttribute('opacity', '1');
+        }
+      }
+
+      function animateLoop() {
+        // Cord spring return
+        if (!phys.isDragging) {
+          const k = 0.21;
+          const damp = 0.72;
+          phys.velX = (phys.velX - phys.pullX * k) * damp;
+          phys.velY = (phys.velY - phys.pullY * k) * damp;
+          phys.pullX += phys.velX;
+          phys.pullY += phys.velY;
+
+          if (Math.abs(phys.pullX) < 0.04 && Math.abs(phys.velX) < 0.04) { phys.pullX = 0; phys.velX = 0; }
+          if (Math.abs(phys.pullY) < 0.04 && Math.abs(phys.velY) < 0.04) { phys.pullY = 0; phys.velY = 0; }
+        }
+
+        // Pendulum sway spring
+        const targetAngle = phys.isDragging ? -phys.pullX * 0.22 : 0;
+        phys.swayVel = (phys.swayVel + (targetAngle - phys.swayAngle) * 0.042) * 0.91;
+        phys.swayAngle += phys.swayVel;
+        if (!phys.isDragging && Math.abs(phys.swayAngle) < 0.02 && Math.abs(phys.swayVel) < 0.02) {
+          phys.swayAngle = 0;
+          phys.swayVel = 0;
+        }
+
+        // Lamp body bouncy squish spring
+        phys.squishVel = (phys.squishVel - phys.squish * 0.22) * 0.74;
+        phys.squish += phys.squishVel;
+        if (Math.abs(phys.squish) < 0.0005 && Math.abs(phys.squishVel) < 0.0005) {
+          phys.squish = 0;
+          phys.squishVel = 0;
+        }
+
+        renderLamp();
+        requestAnimationFrame(animateLoop);
+      }
+
+      /* ---------------------------------------------------------
+       * 5. THEME SWITCHING & CLEAN UI UPDATES
+       * --------------------------------------------------------- */
+      function toggleLightMode() {
+        state.isLight = !state.isLight;
+        state.hasInteracted = true;
+        state.isBlushing = false;
+
+        // Play soft switch + kalimba chime
+        playSwitchSound(state.isLight);
+
+        // Gentle mobile haptic feedback
+        if (navigator.vibrate) {
+          try { navigator.vibrate(12); } catch (_) {}
+        }
+
+        // Cheerful bouncy spring impulse on the lamp body!
+        phys.squishVel = state.isLight ? 0.085 : 0.055;
+        phys.swayVel += (Math.random() > 0.5 ? 1 : -1) * 1.3;
+
+        // Hide first-time hint smoothly
+        el.pullHint.classList.add('opacity-0', 'translate-y-2');
+
+        applyThemeUI();
+      }
+
+      function applyThemeUI() {
+        const on = state.isLight;
+        const theme = TINT_THEMES[state.tint];
+
+        // Toggle sleep breathing animation only when sleeping
+        el.lampBreatheGroup.classList.toggle('anim-breathe', !on);
+
+        // 1) Background & Organic Radial Light Burst
+        el.lightBurst.style.backgroundColor = theme.burstBg;
+        el.lightAura.style.background = theme.aura;
+
+        if (on) {
+          el.outerBg.style.backgroundColor = theme.outerBg;
+          el.mobileScreen.classList.remove('sm:border-[#1f2438]');
+          el.mobileScreen.classList.add('sm:border-black/[0.06]');
+
+          el.lightBurst.classList.remove('scale-0', 'opacity-0');
+          el.lightBurst.classList.add('scale-[2.2]', 'opacity-100');
+
+          el.lightAura.classList.remove('opacity-0');
+          el.lightAura.classList.add('opacity-100');
+
+          el.starsLayer.classList.remove('opacity-100');
+          el.starsLayer.classList.add('opacity-0');
+        } else {
+          el.outerBg.style.backgroundColor = '#0c0e18';
+          el.mobileScreen.classList.remove('sm:border-black/[0.06]');
+          el.mobileScreen.classList.add('sm:border-[#1f2438]');
+
+          el.lightBurst.classList.remove('scale-[2.2]', 'opacity-100');
+          el.lightBurst.classList.add('scale-0', 'opacity-0');
+
+          el.lightAura.classList.remove('opacity-100');
+          el.lightAura.classList.add('opacity-0');
+
+          el.starsLayer.classList.remove('opacity-0');
+          el.starsLayer.classList.add('opacity-100');
+        }
+
+        // 2) Lamp SVG Colors
+        const shadeFill = on ? theme.shadeGrad : 'url(#shadeDarkGrad)';
+        el.lampShade.setAttribute('fill', shadeFill);
+        el.earLeft.setAttribute('fill', shadeFill);
+        el.earRight.setAttribute('fill', shadeFill);
+        el.earLeftInner.setAttribute('fill', on ? theme.earInner : '#4c5685');
+        el.earRightInner.setAttribute('fill', on ? theme.earInner : '#4c5685');
+
+        el.lampSocket.setAttribute('fill', on ? theme.socket : '#2d3454');
+        el.ceilingCap.setAttribute('fill', on ? theme.socket : '#2d3454');
+        el.mainWire.setAttribute('stroke', on ? theme.wire : '#47517a');
+
+        el.lampBulb.setAttribute('fill', on ? '#fef08a' : '#3b4368');
+        el.bulbHalo.setAttribute('opacity', on ? '1' : '0');
+        el.shadeRim.setAttribute('fill', on ? '#b45309' : '#181c30');
+        el.shadeRim.setAttribute('opacity', on ? '0.14' : '0.32');
+        el.lightSparkles.setAttribute('opacity', on ? '1' : '0');
+
+        // Cord & charm glow (glows brighter at night so user easily sees it)
+        el.cordPath.setAttribute('stroke', on ? theme.wire : '#64748b');
+        el.bead1.setAttribute('fill', on ? theme.socket : '#94a3b8');
+        el.bead2.setAttribute('fill', on ? theme.socket : '#94a3b8');
+        el.charmGlow.style.display = on ? 'none' : 'block';
+
+        // Adjust stroke color of dragging/blush faces for crisp contrast in both modes
+        const faceStroke = on ? '#3f2b22' : '#fef08a';
+        el.dragEyeL.setAttribute('stroke', faceStroke);
+        el.dragEyeR.setAttribute('stroke', faceStroke);
+        el.dragMouth.setAttribute('stroke', faceStroke);
+        el.blushEyeL.setAttribute('stroke', on ? '#3f2b22' : '#e2e8f0');
+        el.blushEyeR.setAttribute('stroke', on ? '#3f2b22' : '#e2e8f0');
+        el.blushMouth.setAttribute('stroke', on ? '#3f2b22' : '#e2e8f0');
+
+        // 3) Minimal Header Styling
+        if (on) {
+          el.statusPill.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide bg-white/70 text-stone-700 border border-black/[0.06] backdrop-blur-md transition-all duration-500 shadow-sm';
+          el.statusIcon.textContent = '☀️';
+          el.statusText.textContent = 'Siang';
+
+          el.soundBtn.className = 'w-9 h-9 rounded-full flex items-center justify-center bg-white/70 text-stone-600 border border-black/[0.06] backdrop-blur-md hover:bg-white active:scale-90 transition-all duration-300 shadow-sm';
+        } else {
+          el.statusPill.className = 'inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide bg-white/[0.08] text-indigo-100/90 border border-white/[0.08] backdrop-blur-md transition-all duration-500';
+          el.statusIcon.textContent = '🌙';
+          el.statusText.textContent = 'Malam';
+
+          el.soundBtn.className = 'w-9 h-9 rounded-full flex items-center justify-center bg-white/[0.08] text-indigo-100/85 border border-white/[0.08] backdrop-blur-md hover:bg-white/[0.14] active:scale-90 transition-all duration-300';
+        }
+
+        // 4) Minimal Bottom Greeting Text
+        el.greetingTitle.textContent = on ? 'Selamat Pagi!' : 'Waktunya Istirahat';
+        el.greetingTitle.className = `text-[24px] font-bold tracking-tight transition-colors duration-500 ${
+          on ? 'text-stone-800' : 'text-white'
+        }`;
+
+        el.greetingSubtitle.textContent = on
+          ? theme.subtitle
+          : 'Ssst... lampunya lagi bobo. Tarik talinya ya!';
+        el.greetingSubtitle.className = `text-[14px] font-medium leading-relaxed transition-colors duration-500 ${
+          on ? 'text-stone-500' : 'text-indigo-200/75'
+        }`;
+
+        // 5) 3-Dot Tint Picker (Visible ONLY in Light Mode)
+        if (on) {
+          el.tintPicker.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+          el.tintPicker.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+        } else {
+          el.tintPicker.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          el.tintPicker.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+        }
+
+        updateTintDotRings();
+      }
+
+      function updateTintDotRings() {
+        el.tintDots.forEach((dot) => {
+          const isSelected = dot.dataset.tint === state.tint;
+          dot.classList.remove('ring-2', 'ring-0', 'scale-110');
+          if (isSelected) {
+            dot.classList.add('ring-2', 'scale-110');
+          } else {
+            dot.classList.add('ring-0');
+          }
+        });
+      }
+
+      /* ---------------------------------------------------------
+       * 6. PROGRAMMATIC QUICK-TAP PULL ANIMATION
+       * --------------------------------------------------------- */
+      function triggerQuickPull() {
+        if (phys.isDragging) return;
+        phys.velY = 22;
+        phys.swayVel += 1.1;
+
+        setTimeout(() => {
+          toggleLightMode();
+          phys.velY = -14;
+        }, 125);
+      }
+
+      /* ---------------------------------------------------------
+       * 7. EASTER EGG: TAP LAMP BODY -> SQUISH, BLUSH & HEARTS!
+       * --------------------------------------------------------- */
+      function spawnFloatingHearts() {
+        const count = 3;
+        for (let i = 0; i < count; i++) {
+          const heart = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          const startX = 148 + i * 32 + (Math.random() * 14 - 7);
+          const startY = 96 + (Math.random() * 12 - 6);
+          const dx = (Math.random() * 24 - 12).toFixed(1) + 'px';
+          const dx2 = (Math.random() * 44 - 22).toFixed(1) + 'px';
+          const rot = (Math.random() * 26 - 13).toFixed(0) + 'deg';
+          const rot2 = (Math.random() * 34 - 17).toFixed(0) + 'deg';
+
+          heart.setAttribute(
+            'd',
+            'M0 -4 C-2.5 -8 -9 -7 -9 -2 C-9 3 0 8.5 0 8.5 C0 8.5 9 3 9 -2 C9 -7 2.5 -8 0 -4 Z'
+          );
+          heart.setAttribute('fill', i === 1 ? '#fb7185' : '#f472b6');
+          heart.setAttribute('transform', `translate(${startX}, ${startY})`);
+          heart.classList.add('floating-heart');
+          heart.style.setProperty('--dx', dx);
+          heart.style.setProperty('--dx2', dx2);
+          heart.style.setProperty('--rot', rot);
+          heart.style.setProperty('--rot2', rot2);
+          heart.style.animationDelay = `${i * 0.08}s`;
+
+          el.heartsLayer.appendChild(heart);
+          setTimeout(() => heart.remove(), 1350);
+        }
+      }
+
+      el.lampBodyWrapper.addEventListener('click', (e) => {
+        e.stopPropagation();
+        ensureAudio();
+        playBlushSound();
+
+        // Elastic squishy bounce!
+        phys.squishVel = 0.095;
+        phys.swayVel += (Math.random() > 0.5 ? 1 : -1) * 0.9;
+
+        // Show shy blushing face briefly
+        state.isBlushing = true;
+        if (state.blushTimer) clearTimeout(state.blushTimer);
+        state.blushTimer = setTimeout(() => {
+          state.isBlushing = false;
+        }, 1150);
+
+        spawnFloatingHearts();
+      });
+
+      /* ---------------------------------------------------------
+       * 8. AUTOMATIC NATURAL BLINKING & EYE TRACKING
+       * --------------------------------------------------------- */
+      function scheduleNextBlink() {
+        const delay = 2600 + Math.random() * 3200;
+        setTimeout(() => {
+          if (state.isLight && !phys.isDragging && !state.isBlushing) {
+            el.happyEyesBlink.style.transform = 'scaleY(0.08)';
+            setTimeout(() => {
+              el.happyEyesBlink.style.transform = 'scaleY(1)';
+            }, 130);
+          }
+          scheduleNextBlink();
+        }, delay);
+      }
+      scheduleNextBlink();
+
+      // Subtle eye tracking toward mouse or touch position
+      function updateEyeTracking(clientX, clientY) {
+        if (!state.isLight) {
+          phys.eyeTargetX = 0;
+          phys.eyeTargetY = 0;
+          return;
+        }
+        const rect = el.lampSvg.getBoundingClientRect();
+        const lampCenterX = rect.left + rect.width * 0.5;
+        const lampCenterY = rect.top + rect.height * 0.4;
+
+        const normX = Math.max(-1, Math.min(1, (clientX - lampCenterX) / 180));
+        const normY = Math.max(-1, Math.min(1, (clientY - lampCenterY) / 180));
+
+        phys.eyeTargetX = normX * 3.2;
+        phys.eyeTargetY = normY * 2.4;
+      }
+
+      window.addEventListener('pointermove', (e) => {
+        updateEyeTracking(e.clientX, e.clientY);
+      }, { passive: true });
+
+      /* ---------------------------------------------------------
+       * 9. POINTER EVENTS FOR ELASTIC PULL CORD (TOUCH & MOUSE)
+       * --------------------------------------------------------- */
+      el.cordHandle.addEventListener('pointerdown', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        ensureAudio();
+
+        phys.isDragging = true;
+        phys.pointerId = e.pointerId;
+        phys.startX = e.clientX;
+        phys.startY = e.clientY;
+        phys.dragDist = 0;
+        phys.passedThreshold = false;
+
+        try { el.cordHandle.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!phys.isDragging || e.pointerId !== phys.pointerId) return;
+        e.preventDefault();
+
+        const rect = el.lampSvg.getBoundingClientRect();
+        const scaleX = 360 / rect.width;
+        const scaleY = 360 / rect.height;
+
+        const rawDx = (e.clientX - phys.startX) * scaleX;
+        const rawDy = (e.clientY - phys.startY) * scaleY;
+        phys.dragDist = Math.hypot(rawDx, rawDy);
+
+        // Smooth rubber-band horizontal & vertical resistance
+        phys.pullX = Math.max(-MAX_PULL_X, Math.min(MAX_PULL_X, rawDx * 0.62));
+        let elasticY = rawDy;
+        if (rawDy > PULL_THRESHOLD) {
+          elasticY = PULL_THRESHOLD + (rawDy - PULL_THRESHOLD) * 0.32;
+        } else if (rawDy < 0) {
+          elasticY = rawDy * 0.18;
+        }
+        phys.pullY = Math.max(-8, Math.min(MAX_PULL_Y, elasticY));
+
+        // Mark when user crosses threshold (toggles cleanly on release OR right at threshold)
+        if (!phys.passedThreshold && phys.pullY >= PULL_THRESHOLD) {
+          phys.passedThreshold = true;
+          if (navigator.vibrate) {
+            try { navigator.vibrate(8); } catch (_) {}
+          }
+        }
+      }, { passive: false });
+
+      function onCordRelease(e) {
+        if (!phys.isDragging || e.pointerId !== phys.pointerId) return;
+
+        const wasQuickTap = !phys.passedThreshold && phys.dragDist < 10;
+        const shouldToggle = phys.passedThreshold;
+
+        phys.isDragging = false;
+        phys.pointerId = null;
+
+        try { el.cordHandle.releasePointerCapture(e.pointerId); } catch (_) {}
+
+        if (shouldToggle) {
+          toggleLightMode();
+        } else if (wasQuickTap) {
+          triggerQuickPull();
+        }
+      }
+
+      window.addEventListener('pointerup', onCordRelease);
+      window.addEventListener('pointercancel', onCordRelease);
+
+      /* ---------------------------------------------------------
+       * 10. HEADER & MINIMAL TINT CONTROLS
+       * --------------------------------------------------------- */
+      el.soundBtn.addEventListener('click', () => {
+        state.soundEnabled = !state.soundEnabled;
+        el.iconSoundOn.classList.toggle('hidden', !state.soundEnabled);
+        el.iconSoundOff.classList.toggle('hidden', state.soundEnabled);
+        if (state.soundEnabled) {
+          ensureAudio();
+          playKalimbaNote(659.25, audioCtx ? audioCtx.currentTime : 0, 0.2, 0.08);
+        }
+      });
+
+      el.tintDots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          state.tint = dot.dataset.tint;
+          phys.squishVel = 0.045; // Cute tiny nod bounce when changing tint
+          applyThemeUI();
+        });
+      });
+
+      /* ---------------------------------------------------------
+       * 11. INITIALIZE
+       * --------------------------------------------------------- */
+      applyThemeUI();
+      requestAnimationFrame(animateLoop);
+    })();
+  </script>
+</body>
+</html>
